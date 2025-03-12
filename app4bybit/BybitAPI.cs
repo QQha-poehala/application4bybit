@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace app4bybit
@@ -18,29 +19,50 @@ namespace app4bybit
             _apiSecret = apiSecret;
         }
 
-        private string GenerateSignature(string parameters)
+        private static string GenerateSignature(string data, string secretKey)
         {
-            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_apiSecret)))
+            using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
             {
-                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(parameters));
-                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+                byte[] hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
 
         public async Task<string> GetWalletBalance()
         {
+            string baseUrl = "https://api.bybit.com";
+            string endpoint = "/v5/account/wallet-balance";
+            string accountType = "UNIFIED";
+            string coin = "BTC";
+            string recvWindow = "5000";
             var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-            var parameters = $"api_key={_apiKey}&timestamp={timestamp}";
-            var signature = GenerateSignature(parameters);
+            
+            var parameters = $"accountType={accountType}&coin={coin}&recvWindow={recvWindow}&timestamp={timestamp}";
+            var signature = GenerateSignature(parameters, _apiSecret);
 
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("X-BAPI-API-KEY", _apiKey);
                 client.DefaultRequestHeaders.Add("X-BAPI-SIGN", signature);
                 client.DefaultRequestHeaders.Add("X-BAPI-TIMESTAMP", timestamp);
+                client.DefaultRequestHeaders.Add("X-BAPI-RECV-WINDOW", recvWindow);
 
-                var response = await client.GetAsync($"https://api.bybit.com/v2/private/wallet/balance?{parameters}&sign={signature}");
-                return await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.GetAsync($"{baseUrl}{endpoint}?{parameters}");
+                Console.WriteLine(response);
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("Response:");
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(errorResponse);
+                    return errorResponse;
+                }
             }
         }
     }

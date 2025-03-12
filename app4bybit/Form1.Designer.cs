@@ -68,7 +68,7 @@
             this.оформлениеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1114, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -88,17 +88,17 @@
             // 
             this.terminal.BackColor = System.Drawing.SystemColors.WindowText;
             this.terminal.ForeColor = System.Drawing.SystemColors.Menu;
-            this.terminal.Location = new System.Drawing.Point(24, 233);
+            this.terminal.Location = new System.Drawing.Point(24, 242);
             this.terminal.Name = "terminal";
             this.terminal.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.terminal.Size = new System.Drawing.Size(333, 419);
+            this.terminal.Size = new System.Drawing.Size(333, 202);
             this.terminal.TabIndex = 3;
             this.terminal.Text = "";
             // 
             // button1
             // 
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(1002, 52);
+            this.button1.Location = new System.Drawing.Point(563, 101);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 30);
             this.button1.TabIndex = 4;
@@ -111,7 +111,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1114, 664);
+            this.ClientSize = new System.Drawing.Size(800, 472);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.terminal);
             this.Controls.Add(this.pictureBox1);

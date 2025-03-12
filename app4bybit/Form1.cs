@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace app4bybit
@@ -17,21 +18,22 @@ namespace app4bybit
         public Form1()
         {
             InitializeComponent();
-            _bybitApi = new BybitApi("", ""); // First arg - API_KEY, second - Secret_Key
+            string API_KEY = "";
+            string Secret_Key = "";
+            _bybitApi = new BybitApi(API_KEY, Secret_Key); // First arg - API_KEY, second - Secret_Key
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 var balanceJson = await _bybitApi.GetWalletBalance();
-                var balanceData = JObject.Parse(balanceJson);
-                // Пример вывода баланса BTC
-                var btcBalance = balanceData["result"]["BTC"]["available_balance"];
-                terminal.Text += $"BTC Balance: {balanceData}\\";
+                terminal.Text = balanceJson.ToString();
             }
             catch (Exception ex)
             {
+                Console.WriteLine("warning");
                 terminal.Text += $"Ошибка: {ex.Message}\n";
             }
 
