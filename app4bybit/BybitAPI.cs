@@ -18,33 +18,24 @@ namespace app4bybit
             _apiKey = apiKey;
             _apiSecret = apiSecret;
         }
-
-        private static string GenerateSignature(string data, string secretKey)
-        {
-            using (HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secretKey)))
-            {
-                byte[] hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            }
-        }
-
         public async Task<string> GetWalletBalance()
         {
             string baseUrl = "https://api.bybit.com";
             string endpoint = "/v5/account/wallet-balance";
             string accountType = "UNIFIED";
-            string coin = "BTC";
-            string recvWindow = "5000";
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+            //string coin = "USDT";
+            string recvWindow = "10000";
+            long timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             
-            var parameters = $"accountType={accountType}&coin={coin}&recvWindow={recvWindow}&timestamp={timestamp}";
-            var signature = GenerateSignature(parameters, _apiSecret);
+            var parameters = $"accountType={accountType}";
+            var signature = GenerateSignature(timestamp, parameters, recvWindow);
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add("X-BAPI-API-KEY", _apiKey);
                 client.DefaultRequestHeaders.Add("X-BAPI-SIGN", signature);
-                client.DefaultRequestHeaders.Add("X-BAPI-TIMESTAMP", timestamp);
+                client.DefaultRequestHeaders.Add("X-BAPI-TIMESTAMP", timestamp.ToString());
                 client.DefaultRequestHeaders.Add("X-BAPI-RECV-WINDOW", recvWindow);
 
                 HttpResponseMessage response = await client.GetAsync($"{baseUrl}{endpoint}?{parameters}");
@@ -52,7 +43,7 @@ namespace app4bybit
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Response:");
+                    Console.WriteLine("Ответ сервака:");
                     Console.WriteLine(responseBody);
                     return responseBody;
                 }
@@ -63,6 +54,19 @@ namespace app4bybit
                     Console.WriteLine(errorResponse);
                     return errorResponse;
                 }
+            }
+        }
+        // Метод для генерации подписи
+        private string GenerateSignature(long timestamp, string queryParams, string recvWindow)
+        {
+            string dataToSign = $"{timestamp}{_apiKey}{recvWindow}{queryParams}";
+            byte[] secretKeyBytes = Encoding.UTF8.GetBytes(_apiSecret);
+            byte[] dataBytes = Encoding.UTF8.GetBytes(dataToSign);
+
+            using (var hmac = new HMACSHA256(secretKeyBytes))
+            {
+                byte[] hashBytes = hmac.ComputeHash(dataBytes);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
     }
