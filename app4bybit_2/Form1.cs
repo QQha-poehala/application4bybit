@@ -19,8 +19,8 @@ namespace app4bybit_2
         public Form1()
         {
             InitializeComponent();
-            string API_KEY = "";
-            string Secret_Key = "";
+            string API_KEY = "gEFoibMvEjoxSTgTNj";
+            string Secret_Key = "m4XiOtjgfKOwfG8hYs7JCjd3sMFYYhjchlbW";
             _bybitApi = new BybitApi(API_KEY, Secret_Key); // First arg - API_KEY, second - Secret_Key
         }
 
