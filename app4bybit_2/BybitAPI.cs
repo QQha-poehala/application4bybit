@@ -32,5 +32,12 @@ namespace app4bybit_2
             string? result = await _accountService.GetAccountBalance(AccountType.Unified);
             return result;
         }
+        public async Task<string> GetHistory()
+        {
+            // Получение баланса кошелька
+            string? result = await _accountService.GetAccountTransaction();
+            return result;
+
+        }
     }
 }

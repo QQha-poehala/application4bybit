@@ -37,6 +37,7 @@
             terminal = new RichTextBox();
             button1 = new Button();
             button2 = new Button();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -124,12 +125,26 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // button3
+            // 
+            button3.BackColor = Color.Transparent;
+            button3.ForeColor = Color.Black;
+            button3.Location = new Point(444, 42);
+            button3.Margin = new Padding(4, 3, 4, 3);
+            button3.Name = "button3";
+            button3.Size = new Size(117, 35);
+            button3.TabIndex = 6;
+            button3.Text = "История ";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 0, 64);
             ClientSize = new Size(933, 637);
+            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(terminal);
@@ -159,6 +174,7 @@
         private System.Windows.Forms.RichTextBox terminal;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private Button button3;
     }
 }
 
