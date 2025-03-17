@@ -11,6 +11,7 @@ using bybit.net.api.Models;
 using bybit.net.api.Services;
 using bybit.net.api.ApiServiceImp;
 using bybit.net.api.Models.Account;
+using System.Collections.Generic;
 
 
 namespace app4bybit_2
@@ -20,24 +21,33 @@ namespace app4bybit_2
         private readonly string _apiKey;
         private readonly string _apiSecret;
         private readonly BybitAccountService _accountService;
+
         public BybitApi(string apiKey, string apiSecret)
         {
             _apiKey = apiKey;
             _apiSecret = apiSecret;
-            _accountService = new BybitAccountService(apiKey, apiSecret, "https://api.bybit.com");
+            _accountService = new BybitAccountService(apiKey, apiSecret, "https://api.bybit.com", "10000");
         }
+        // TODO: change timestamp. GetAccountBalance и GetAccountTransaction не предоставляют такую возможность,BybitAccountService тоже. Не понимаю как исправить
+        //private string CreateSignature(string secret, string queryString)
+        //{
+        //    using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
+        //    {
+        //        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(queryString));
+        //        return BitConverter.ToString(hash).Replace("-", "").ToLower();
+        //    }
+        //}   
+        //private long GetCurrentTimestamp()
+        //{
+        //    return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        //}
         public async Task<string> GetWalletBalance()
         {
-            // Получение баланса кошелька
-            string? result = await _accountService.GetAccountBalance(AccountType.Unified);
-            return result;
+            return await _accountService.GetAccountBalance(AccountType.Unified);
         }
         public async Task<string> GetHistory()
         {
-            // Получение баланса кошелька
-            string? result = await _accountService.GetAccountTransaction();
-            return result;
-
+            return  await _accountService.GetAccountTransaction(limit: 100);
         }
     }
 }

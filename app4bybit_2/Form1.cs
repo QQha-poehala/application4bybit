@@ -15,11 +15,11 @@ namespace app4bybit_2
 {
     public partial class Form1 : Form
     {
-        private readonly BybitApi _bybitApi;
+        private BybitApi _bybitApi;
         public Form1()
         {
             InitializeComponent();
-            string API_KEY = "";
+            string API_KEY =  "";
             string Secret_Key = "";
             _bybitApi = new BybitApi(API_KEY, Secret_Key); // First arg - API_KEY, second - Secret_Key
         }
