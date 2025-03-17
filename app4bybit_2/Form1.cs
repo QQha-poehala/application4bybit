@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 
-namespace app4bybit
+namespace app4bybit_2
 {
     public partial class Form1 : Form
     {
@@ -19,8 +19,8 @@ namespace app4bybit
         public Form1()
         {
             InitializeComponent();
-            string API_KEY = "";
-            string Secret_Key = "";
+            string API_KEY = "p74TBD4Qkd9JJw9p6g";
+            string Secret_Key = "VtQdL4oqiCOZsXUAqI9FvhDx6M1f4ylXDHFS";
             _bybitApi = new BybitApi(API_KEY, Secret_Key); // First arg - API_KEY, second - Secret_Key
         }
 
@@ -43,8 +43,8 @@ namespace app4bybit
                         var coins = account["coin"] as JArray;
                         if (coins != null)
                         {
-                            terminal.Text += "---------------------------------------------------------------------------------------------------------------\n ----------------------------------------МОИ МОНЕТЫ--------------------------------------------\n";
-
+                            terminal.Text += "-----------------------------------------------------------------------------------------------------\n ----------------------------------------МОИ МОНЕТЫ--------------------------------------------\n";
+                            terminal.Text += $"Общий капитал счёта: {account["totalEquity"]?.ToString()}\n";
                             foreach (var coin in coins)
                             {
                                 string coinName = coin["coin"]?.ToString();

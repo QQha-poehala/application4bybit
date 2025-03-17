@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace app4bybit
+namespace app4bybit_2
 {
     public partial class Form2 : Form
     {

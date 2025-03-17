@@ -1,4 +1,4 @@
-﻿namespace app4bybit
+﻿namespace app4bybit_2
 {
     partial class Form2
     {

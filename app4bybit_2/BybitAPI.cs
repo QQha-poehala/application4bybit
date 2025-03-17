@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using bybit.net.api;
 
-namespace app4bybit
+
+namespace app4bybit_2
 {
     public class BybitApi
     {

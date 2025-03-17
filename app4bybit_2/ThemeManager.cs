@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace app4bybit
+namespace app4bybit_2
 {
     public static class ThemeManager
     {

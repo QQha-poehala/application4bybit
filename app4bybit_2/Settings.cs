@@ -1,4 +1,4 @@
-﻿namespace app4bybit.Properties {
+﻿namespace app4bybit_2.Properties {
     
     
     // Этот класс позволяет обрабатывать определенные события в классе параметров:

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace app4bybit
+namespace app4bybit_2
 {
     internal static class Program
     {
